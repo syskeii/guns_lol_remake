@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Card</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Custom Cursor -->
+    <div id="custom-cursor" class="custom-cursor"></div>
+
+    <!-- Background Media -->
+    <div id="bg-container" class="bg-container">
+        <!-- Populated by JS -->
+    </div>
+
+    <!-- Snow Particles Canvas -->
+    <canvas id="snow-canvas" class="snow-canvas"></canvas>
+
+    <!-- Enter Site Overlay -->
+    <div id="enter-overlay" class="enter-overlay">
+        <div class="enter-content">
+            <h1 class="enter-text">[ Click or Press Any Key to Enter ]</h1>
+        </div>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="bg-music" loop>
+        <source src="" type="audio/mpeg" id="bg-music-source">
+    </audio>
+
+    <!-- Main Content Grid -->
+    <main id="main-content" class="main-content hidden layout-center">
+
+        <!-- 3D Perspective Wrapper -->
+        <div class="profile-card-wrapper" id="profile-card-wrapper">
+            <!-- The Profile Card -->
+            <div class="profile-card" id="profile-card">
+                <!-- Rotating border element -->
+                <div class="card-border-wrapper">
+                    <div class="card-border"></div>
+                </div>
+
+                <div class="card-content">
+                    <div class="pfp-container stagger-item delay-1">
+                        <img src="https://via.placeholder.com/150" alt="Profile Picture" id="pfp-image">
+                        <div class="pfp-glow" id="pfp-glow"></div>
+                    </div>
+
+                    <div class="text-container">
+                        <h1 class="username stagger-item delay-2" id="username-text">username</h1>
+                        <p class="bio stagger-item delay-3" id="bio-text">Welcome to my profile! This is a customizable
+                            bio.</p>
+
+                        <div class="social-links stagger-item delay-4" id="social-links-container">
+                            <!-- Links injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Audio Toggle Button -->
+        <button id="audio-toggle" class="audio-toggle hidden-element">
+            <i class="fa-solid fa-volume-high"></i>
+        </button>
+
+    </main>
+
+    <!-- Text (Popup) Modal -->
+    <div id="text-modal" class="text-modal hidden-modal">
+        <div class="text-modal-content profile-card">
+            <button id="close-modal-btn" class="close-btn modal-close"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-icon-container">
+                <i id="modal-platform-icon" class="fa-brands fa-discord"></i>
+            </div>
+            <h2 id="modal-title">Discord Username</h2>
+            <div class="modal-text-box">
+                <p id="modal-text-value">syskei2</p>
+                <button id="modal-copy-btn" class="modal-copy-btn"><i class="fa-solid fa-copy"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customization Dashboard -->
+    <div id="dashboard" class="dashboard hidden">
+        <div class="dashboard-header">
+            <h2>Customizer</h2>
+            <button id="close-dashboard" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="dashboard-content">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="general">General</button>
+                <button class="tab-btn" data-tab="media">Media</button>
+                <button class="tab-btn" data-tab="design">Design</button>
+            </div>
+
+            <div class="tab-content active" id="tab-general">
+                <label>Username</label>
+                <input type="text" id="input-username" placeholder="Your username">
+
+                <label>Bio</label>
+                <textarea id="input-bio" rows="3" placeholder="Write something about yourself..."></textarea>
+
+                <hr style="border:0; height:1px; background:#444; margin:10px 0;">
+                <label>Social Links</label>
+                <div id="edit-links-container" class="edit-links-container"></div>
+                <select id="add-link-platform" style="margin-top:10px;">
+                    <option value="discord">Discord</option>
+                    <option value="youtube">YouTube</option>
+                    <option value="tiktok">TikTok</option>
+                    <option value="twitter">Twitter</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="spotify">Spotify</option>
+                    <option value="twitch">Twitch</option>
+                    <option value="github">GitHub</option>
+                    <option value="globe">Custom Website</option>
+                </select>
+                <select id="add-link-type" style="margin-top:10px;">
+                    <option value="url">Link (Open in New Tab)</option>
+                    <option value="text">Text (Popup to Copy)</option>
+                </select>
+                <input type="text" id="add-link-url" placeholder="Paste URL or text to display"
+                    style="margin-top:10px;">
+                <button id="add-link-btn" class="action-btn">Add Link</button>
+            </div>
+
+            <div class="tab-content" id="tab-media">
+                <label>Profile Picture (Upload)</label>
+                <input type="file" id="input-pfp-local" accept="image/*">
+
+                <label>OR Profile Picture URL</label>
+                <input type="text" id="input-pfp" placeholder="https://image.url">
+
+                <hr style="border:0; height:1px; background:#444; margin:10px 0;">
+
+                <label>Background Image (Upload)</label>
+                <input type="file" id="input-bg-local" accept="image/*">
+
+                <label>OR Background Video/Image URL</label>
+                <input type="text" id="input-bg" placeholder="https://video-or-image.url">
+
+                <hr style="border:0; height:1px; background:#444; margin:10px 0;">
+
+                <label>Background Music URL (MP3)</label>
+                <input type="text" id="input-music" placeholder="https://audio.mp3">
+            </div>
+
+            <div class="tab-content" id="tab-design">
+                <label>Card Layout</label>
+                <select id="input-layout">
+                    <option value="layout-center">Center (Default)</option>
+                    <option value="layout-split">Split View</option>
+                    <option value="layout-bottom">Bottom Anchored</option>
+                </select>
+
+                <label>Card Background Color</label>
+                <input type="color" id="input-card-bg" value="#000000">
+
+                <label>Card Opacity (Glass Effect)</label>
+                <input type="range" id="input-card-opacity" min="0" max="1" step="0.1" value="0.5">
+
+                <label>Text Color</label>
+                <input type="color" id="input-text-color" value="#ffffff">
+
+                <label>Accent Color (Glows/Hover)</label>
+                <input type="color" id="input-accent-color" value="#ff0055">
+
+                <label>Toggle 3D Tilt</label>
+                <select id="input-enable-tilt">
+                    <option value="true">Enabled</option>
+                    <option value="false">Disabled</option>
+                </select>
+
+                <label>PFP Shape</label>
+                <select id="input-pfp-shape">
+                    <option value="50%">Circle</option>
+                    <option value="15px">Rounded Square</option>
+                    <option value="0px">Square</option>
+                </select>
+            </div>
+
+            <button id="save-btn" class="save-btn">Save to Local Browser</button>
+            <button id="export-btn" class="export-btn"
+                style="margin-top: 10px; padding: 10px; width: 100%; background: transparent; color: #fff; border: 1px solid var(--accent-color); border-radius: 8px; cursor: pointer; font-weight: 600; font-family: 'Inter', sans-serif; transition: all 0.2s;">
+                <i class="fa-solid fa-code"></i> Copy Config for GitHub Pages
+            </button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
