@@ -14,9 +14,9 @@ const defaultProfile = {
     enableTilt: "true",
     links: [
         { id: "discord-1", platform: "discord", type: "text", url: "syskei1" },
-        { id: "youtube-1", platform: "youtube", type: "url", url: "https://youtube.com" },
-        { id: "tiktok-1", platform: "tiktok", type: "url", url: "https://tiktok.com" },
-        { id: "globe-1", platform: "globe", type: "url", url: "https://mywebsite.com" }
+        { id: "youtube-1", platform: "youtube", type: "url", url: "https://youtube.com/@syskei1" },
+        { id: "tiktok-1", platform: "tiktok", type: "url", url: "https://www.tiktok.com/@syswastaken" },
+        { id: "globe-1", platform: "globe", type: "url", url: "https://luhhhzaee.github.io/thumbnails/" }
     ]
 };
 
